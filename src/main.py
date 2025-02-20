@@ -1,5 +1,6 @@
 import os
 import sys
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import discord
@@ -16,6 +17,7 @@ intents = discord.Intents.all()
 bot = commands.Bot(command_prefix=".", intents=intents)
 bot_commands = BotCommands(bot)
 
+
 @bot.event
 async def on_ready():
     await bot.add_cog(bot_commands)
@@ -24,17 +26,19 @@ async def on_ready():
     )
     print(f"bot working: {bot.user} in {ENVIRONMENT} mode")
 
+
 @bot.event
 async def on_command_error(ctx, exception):
     if ENVIRONMENT == "development":
         await ctx.send(exception)
         return
-        
+
     if type(exception) in allowed_errors:
         await ctx.send(exception)
         return
 
     logging.error(exception)
+
 
 def main():
     DISCORD_API_TOKEN = os.getenv("DISCORD_API_TOKEN")

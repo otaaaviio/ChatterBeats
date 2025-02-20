@@ -83,16 +83,15 @@ class BotCommands(commands.Cog):
             color=discord.Color.blue(),
         )
         await ctx.send(embed=embed)
-        
-    @tasks.loop(seconds=10) 
+
+    @tasks.loop(seconds=10)
     async def check_speak_status(self):
         if self.enabled_to_speak_messages:
             print(f"OtaBot is enabled to speak messages.")
-            
+
         else:
             print(f"OtaBot is not enabled to speak messages.")
-            
 
     @check_speak_status.before_loop
     async def before_check_speak_status(self):
-        await self.bot.wait_until_ready() 
+        await self.bot.wait_until_ready()
