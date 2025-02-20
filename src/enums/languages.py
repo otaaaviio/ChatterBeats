@@ -1,0 +1,16 @@
+available_languages = {
+    "pt": "Portuguese",
+    "en": "English",
+    "es": "Spanish",
+    "fr": "French",
+    "de": "German",
+    "it": "Italian",
+    "nl": "Dutch",
+    "pl-pl": "Polish",
+    "ru": "Russian",
+    "tr": "Turkish",
+    "ja": "Japanese",
+    "ko-kr": "Korean",
+    "zh-CN": "Chinese (Simplified)",
+    "zh-TW": "Chinese (Traditional)",
+}
