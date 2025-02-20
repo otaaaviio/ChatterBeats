@@ -1,4 +1,3 @@
-import asyncio
 import discord
 from discord.ext import commands, tasks
 from enums.languages import available_languages
@@ -8,7 +7,6 @@ class BotCommands(commands.Cog):
     def __init__(self, bot):
         self.enabled_to_speak_messages = False
         self.current_language = list(available_languages.keys())[0]
-        self.message_queue = asyncio.Queue()
         self.bot = bot
 
     @commands.command(name="set-lang")
