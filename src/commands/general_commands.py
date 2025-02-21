@@ -1,3 +1,5 @@
+import os
+import sys
 import discord
 from discord.ext import commands, tasks
 from enums.languages import available_languages
@@ -9,7 +11,7 @@ class GeneralCommands(commands.Cog):
         self.current_language = list(available_languages.keys())[0]
         self.bot = bot
 
-    @commands.command()
+    @commands.command(description="Set the language for OtaBot.")
     async def setlang(self, ctx, arg):
         if arg in available_languages.keys():
             self.current_language = arg
@@ -19,7 +21,7 @@ class GeneralCommands(commands.Cog):
                 f"Language not available. Type .languages to see all available languages."
             )
 
-    @commands.command()
+    @commands.command(description="Get all available languages for OtaBot.")
     async def languages(self, ctx):
         embed = discord.Embed(
             title="Available languages for OtaBot:",
@@ -30,16 +32,17 @@ class GeneralCommands(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(description="Join the voice channel.")
     async def join(self, ctx):
         if ctx.author.voice:
             channel = ctx.author.voice.channel
-            await channel.connect()
+                        
+            await channel.connect(self_deaf=True)
             await ctx.send(f"Joined {channel}.")
         else:
             await ctx.send(f"You need to be in a voice channel to use this command.")
 
-    @commands.command()
+    @commands.command(description="Leave the voice channel.")
     async def leave(self, ctx):
         if ctx.guild.voice_client:
             await ctx.guild.voice_client.disconnect()
@@ -47,7 +50,7 @@ class GeneralCommands(commands.Cog):
         else:
             await ctx.send(f"OtaBot is not in a voice channel.")
 
-    @commands.command()
+    @commands.command(description="Get the current status of OtaBot, like language, channel and if it is enabled to speak messages.")
     async def status(self, ctx):
         msgs = {
             "Speaking": self.enabled_to_speak_messages,
@@ -63,17 +66,17 @@ class GeneralCommands(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(description="Enable OtaBot to speak messages in chat.")
     async def enable(self, ctx):
         self.enabled_to_speak_messages = True
         await ctx.send(f"OtaBot is now ready to speak messages in chat.")
 
-    @commands.command()
+    @commands.command(description="Disable OtaBot from speaking messages in chat.")
     async def disable(self, ctx):
         self.enabled_to_speak_messages = False
         await ctx.send(f"OtaBot is no longer speaking messages in chat.")
 
-    @commands.command()
+    @commands.command(description="Get to know OtaBot.")
     async def otabot(self, ctx):
         embed = discord.Embed(
             title="Hello!",
@@ -82,14 +85,16 @@ class GeneralCommands(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @tasks.loop(seconds=10)
-    async def check_speak_status(self):
-        if self.enabled_to_speak_messages:
-            print(f"OtaBot is enabled to speak messages.")
+    @commands.command(hidden=True)
+    async def reset(self, ctx):
+        if ctx.author.name != "ota_targaryen":
+            ctx.send("You don't have permission to use this command.")
+            return
 
-        else:
-            print(f"OtaBot is not enabled to speak messages.")
-
-    @check_speak_status.before_loop
-    async def before_check_speak_status(self):
-        await self.bot.wait_until_ready()
+        if self.bot.voice_clients:
+            for vc in self.bot.voice_clients:
+                await vc.disconnect()
+        
+        main_path = os.path.join(os.path.dirname(__file__), "..", "main.py")
+        main_path = os.path.abspath(main_path)
+        os.execv(sys.executable, [sys.executable, main_path])
