@@ -1,12 +1,9 @@
 import asyncio
 import os
-import sys
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
+import signal
 import discord
-from src.logging_config import *
-from src.commands import BotCommands
+from config.logging_config import *
+from commands.general_commands import GeneralCommands
 from discord.ext import commands
 from enums.errors import allowed_errors
 from dotenv import load_dotenv
@@ -24,12 +21,12 @@ class MyBot(commands.Bot):
 
 
 bot = MyBot(command_prefix=".", intents=intents)
-bot_commands = BotCommands(bot)
+general_commands = GeneralCommands(bot)
 
 
 @bot.event
 async def on_ready():
-    await bot.add_cog(bot_commands)
+    await bot.add_cog(general_commands)
     await bot.change_presence(
         activity=discord.Activity(type=discord.ActivityType.playing, name=".otabot")
     )
@@ -45,6 +42,8 @@ async def on_command_error(ctx, exception):
     if type(exception) in allowed_errors:
         await ctx.send(exception)
         return
+    
+    print(ctx)
 
     logging.error(exception)
 
@@ -58,7 +57,7 @@ async def process_messages():
         try:
             if (
                 bot_voice_channel
-                and bot_commands.enabled_to_speak_messages
+                and general_commands.enabled_to_speak_messages
                 and message.content
             ):
                 if voice_channel == bot_voice_channel.channel:
@@ -66,7 +65,7 @@ async def process_messages():
                     text_to_say = message.content
 
                     os.system(
-                        f"gtts-cli '{text_to_say}' --lang {bot_commands.current_language} --output {tts_audio_path}"
+                        f"gtts-cli '{text_to_say}' --lang {general_commands.current_language} --output {tts_audio_path}"
                     )
 
                     if os.path.exists(tts_audio_path):
@@ -102,9 +101,18 @@ async def on_message(message):
 
     await message_queue.put(message)
 
+async def shutdown():
+    if bot.voice_clients:
+        for vc in bot.voice_clients:
+            await vc.disconnect()
+    await bot.close()
+    
+def handle_exit(sig, frame):
+    asyncio.get_event_loop().create_task(shutdown())
 
 async def main():
     DISCORD_API_TOKEN = os.getenv("DISCORD_API_TOKEN")
+    signal.signal(signal.SIGINT, handle_exit)
     await bot.start(DISCORD_API_TOKEN)
 
 

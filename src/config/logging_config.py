@@ -3,7 +3,6 @@ from logging.handlers import RotatingFileHandler
 from datetime import datetime
 import os
 
-# Certifique-se de que o diretório de logs existe
 log_dir = "logs"
 if not os.path.exists(log_dir):
     os.makedirs(log_dir)

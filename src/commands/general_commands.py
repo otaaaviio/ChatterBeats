@@ -3,14 +3,14 @@ from discord.ext import commands, tasks
 from enums.languages import available_languages
 
 
-class BotCommands(commands.Cog):
+class GeneralCommands(commands.Cog):
     def __init__(self, bot):
-        self.enabled_to_speak_messages = False
+        self.enabled_to_speak_messages = True
         self.current_language = list(available_languages.keys())[0]
         self.bot = bot
 
-    @commands.command(name="set-lang")
-    async def set_lang(self, ctx, arg):
+    @commands.command()
+    async def setlang(self, ctx, arg):
         if arg in available_languages.keys():
             self.current_language = arg
             await ctx.send(f"Language set to {self.current_language}")
