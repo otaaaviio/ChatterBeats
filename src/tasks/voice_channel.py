@@ -17,7 +17,11 @@ async def process_messages(bot, message_queue):
 
         try:
             general_commands = bot.get_cog("GeneralCommands")
-            if bot_voice_channel and general_commands.enabled_to_speak_messages and message.content:
+            if (
+                bot_voice_channel
+                and general_commands.enabled_to_speak_messages
+                and message.content
+            ):
                 if voice_channel == bot_voice_channel.channel:
                     tts_audio_path = "tts_audio.mp3"
                     text_to_say = message.content

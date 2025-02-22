@@ -36,7 +36,7 @@ class GeneralCommands(commands.Cog):
     async def join(self, ctx):
         if ctx.author.voice:
             channel = ctx.author.voice.channel
-                        
+
             await channel.connect(self_deaf=True)
             await ctx.send(f"Joined {channel}.")
         else:
@@ -50,7 +50,9 @@ class GeneralCommands(commands.Cog):
         else:
             await ctx.send(f"OtaBot is not in a voice channel.")
 
-    @commands.command(description="Get the current status of OtaBot, like language, channel and if it is enabled to speak messages.")
+    @commands.command(
+        description="Get the current status of OtaBot, like language, channel and if it is enabled to speak messages."
+    )
     async def status(self, ctx):
         msgs = {
             "Speaking": self.enabled_to_speak_messages,
@@ -94,7 +96,7 @@ class GeneralCommands(commands.Cog):
         if self.bot.voice_clients:
             for vc in self.bot.voice_clients:
                 await vc.disconnect()
-        
+
         main_path = os.path.join(os.path.dirname(__file__), "..", "main.py")
         main_path = os.path.abspath(main_path)
         os.execv(sys.executable, [sys.executable, main_path])
