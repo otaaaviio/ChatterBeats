@@ -27,7 +27,7 @@ def setup_events(bot):
 
     @bot.event
     async def on_command_error(ctx, exception):
-        if ENVIRONMENT == "development":
+        if ENVIRONMENT == "development" and type(exception) not in Error.get_allowed_errors():
             await ctx.send(exception)
             return
 

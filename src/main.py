@@ -29,6 +29,7 @@ async def shutdown():
         for vc in bot.voice_clients:
             await vc.disconnect()
     await bot.close()
+    await bot.http.close()
 
 
 def handle_exit(sig, frame):
