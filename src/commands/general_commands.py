@@ -1,21 +1,22 @@
 import os
 import sys
 import discord
-from discord.ext import commands, tasks
-from enums.languages import available_languages
+from discord.ext import commands
+from enums.languages import Language
+from enums.operation_modes import OperationMode
 
 
 class GeneralCommands(commands.Cog):
     def __init__(self, bot):
-        self.enabled_to_speak_messages = True
-        self.current_language = list(available_languages.keys())[0]
-        self.bot = bot
+        self.op_mode: OperationMode = OperationMode.TTS
+        self.curr_lang: Language = Language.PT
+        self.bot: commands.Bot = bot
 
     @commands.command(description="Set the language for OtaBot.")
-    async def setlang(self, ctx, arg):
-        if arg in available_languages.keys():
-            self.current_language = arg
-            await ctx.send(f"Language set to {self.current_language}")
+    async def setlang(self, ctx, lang):
+        if lang in Language.get_available_languages():
+            self.curr_lang = Language(lang)
+            await ctx.send(f"Language set to {Language.get_language(lang)}")
         else:
             await ctx.send(
                 f"Language not available. Type .languages to see all available languages."
@@ -25,8 +26,8 @@ class GeneralCommands(commands.Cog):
     async def languages(self, ctx):
         embed = discord.Embed(
             title="Available languages for OtaBot:",
-            description="\n\n".join(
-                f"**{key}** → {value}" for key, value in available_languages.items()
+            description="\n".join(
+                f"**{value}**: {key}" for key, value in Language.get_all_languages()
             ),
             color=discord.Color.blue(),
         )
@@ -42,7 +43,7 @@ class GeneralCommands(commands.Cog):
         else:
             await ctx.send(f"You need to be in a voice channel to use this command.")
 
-    @commands.command(description="Leave the voice channel.")
+    @commands.command(description="Leave the voice channel.", title="Leave")
     async def leave(self, ctx):
         if ctx.guild.voice_client:
             await ctx.guild.voice_client.disconnect()
@@ -55,9 +56,11 @@ class GeneralCommands(commands.Cog):
     )
     async def status(self, ctx):
         msgs = {
-            "Speaking": self.enabled_to_speak_messages,
-            "Language": available_languages[self.current_language],
-            "Channel": ctx.guild.voice_client.channel,
+            "Mode": OperationMode.get_mode(self.op_mode.value),
+            "Language": Language.get_language(self.curr_lang.value),
+            "Channel": (
+                ctx.guild.voice_client.channel if ctx.guild.voice_client else "None"
+            ),
         }
         embed = discord.Embed(
             title="OtaBot status:",
@@ -68,15 +71,31 @@ class GeneralCommands(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @commands.command(description="Enable OtaBot to speak messages in chat.")
-    async def enable(self, ctx):
-        self.enabled_to_speak_messages = True
-        await ctx.send(f"OtaBot is now ready to speak messages in chat.")
+    @commands.command(
+        description="Set the mode for OtaBot. Type .modes to see all available modes."
+    )
+    async def setop(self, ctx, mode):
+        if mode == self.op_mode.value:
+            await ctx.send(f"Mode is already set to {OperationMode.get_mode(mode)}.")
+            return
 
-    @commands.command(description="Disable OtaBot from speaking messages in chat.")
-    async def disable(self, ctx):
-        self.enabled_to_speak_messages = False
-        await ctx.send(f"OtaBot is no longer speaking messages in chat.")
+        if mode in OperationMode.get_available_modes():
+            self.op_mode = OperationMode(mode)
+            await ctx.send(f"Mode set to {OperationMode.get_mode(mode)}.")
+            return
+
+        await ctx.send(f"Mode not available. Type .modes to see all available modes.")
+
+    @commands.command(description="Get all available modes for OtaBot.")
+    async def modes(self, ctx):
+        embed = discord.Embed(
+            title="Available modes for OtaBot:",
+            description="\n".join(
+                f"**{value}**: {key}" for key, value in OperationMode.get_all_modes()
+            ),
+            color=discord.Color.blue(),
+        )
+        await ctx.send(embed=embed)
 
     @commands.command(description="Get to know OtaBot.")
     async def otabot(self, ctx):

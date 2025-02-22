@@ -3,6 +3,8 @@ import os
 import asyncio
 import discord
 from dotenv import load_dotenv
+from enums.operation_modes import OperationMode
+from commands.general_commands import GeneralCommands
 
 load_dotenv()
 ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
@@ -16,10 +18,10 @@ async def process_messages(bot, message_queue):
         bot_voice_channel = message.guild.voice_client
 
         try:
-            general_commands = bot.get_cog("GeneralCommands")
+            general_commands: GeneralCommands = bot.get_cog("GeneralCommands")
             if (
                 bot_voice_channel
-                and general_commands.enabled_to_speak_messages
+                and general_commands.op_mode == OperationMode.TTS
                 and message.content
             ):
                 if voice_channel == bot_voice_channel.channel:
@@ -27,7 +29,7 @@ async def process_messages(bot, message_queue):
                     text_to_say = message.content
 
                     os.system(
-                        f"gtts-cli '{text_to_say}' --lang {general_commands.current_language} --output {tts_audio_path}"
+                        f"gtts-cli '{text_to_say}' --lang {general_commands.curr_lang.value} --output {tts_audio_path}"
                     )
 
                     if os.path.exists(tts_audio_path):
