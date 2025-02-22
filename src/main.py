@@ -3,7 +3,6 @@ import os
 import signal
 import discord
 from config.logging_config import *
-from commands.general_commands import GeneralCommands
 from discord.ext import commands
 from dotenv import load_dotenv
 from tasks.voice_channel import process_messages
@@ -22,8 +21,7 @@ class OtaBot(commands.Bot):
 
 
 bot = OtaBot(command_prefix=".", intents=intents)
-general_commands = GeneralCommands(bot)
-setup_events(bot, general_commands)
+setup_events(bot)
 
 
 async def shutdown():
