@@ -5,7 +5,7 @@ import discord
 from config.logging_config import *
 from commands.general_commands import GeneralCommands
 from discord.ext import commands
-from enums.errors import allowed_errors
+from enums.errors import Error
 from dotenv import load_dotenv
 from tasks.voice_channel import process_messages, message_queue
 
@@ -45,7 +45,7 @@ async def on_command_error(ctx, exception):
         await ctx.send(exception)
         return
 
-    if type(exception) in allowed_errors:
+    if type(exception) in Error.get_allowed_errors():
         await ctx.send(exception)
         return
 
