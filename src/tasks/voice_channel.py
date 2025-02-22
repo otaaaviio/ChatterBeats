@@ -11,13 +11,12 @@ ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
 message_queue = asyncio.Queue(maxsize=100)
 
 
-async def process_messages(bot, message_queue):
+async def process_messages(bot):
     while True:
         message = await message_queue.get()
-        voice_channel = message.author.voice.channel
-        bot_voice_channel = message.guild.voice_client
-
         try:
+            voice_channel = message.author.voice.channel
+            bot_voice_channel = message.guild.voice_client
             general_commands: GeneralCommands = bot.get_cog("GeneralCommands")
             if (
                 bot_voice_channel

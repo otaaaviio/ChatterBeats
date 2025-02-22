@@ -1,6 +1,7 @@
 from discord.ext import commands
 from enum import Enum
 
+
 class Error(Enum):
     __ALLOWED_ERRORS = [
         commands.MissingPermissions,
@@ -12,7 +13,7 @@ class Error(Enum):
         commands.BotMissingPermissions,
         commands.CommandOnCooldown,
     ]
-    
+
     @staticmethod
     def get_allowed_errors():
         return Error.__ALLOWED_ERRORS
