@@ -8,7 +8,7 @@ from enums.operation_modes import OperationMode
 
 class GeneralCommands(commands.Cog):
     def __init__(self, bot):
-        self.op_mode: OperationMode = OperationMode.TTS
+        self.op_mode: OperationMode = OperationMode.PLAYBACK
         self.curr_lang: Language = Language.PT
         self.bot: commands.Bot = bot
 

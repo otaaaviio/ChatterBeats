@@ -5,7 +5,7 @@ import discord
 from config.logging_config import *
 from discord.ext import commands
 from dotenv import load_dotenv
-from tasks.voice_channel import process_messages
+from tasks.process_messages import process_messages
 from events.events import setup_events
 
 

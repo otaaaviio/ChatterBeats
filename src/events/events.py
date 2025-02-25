@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from enums.errors import Error
 from commands.general_commands import GeneralCommands
 from commands.music_commands import MusicCommands
-from tasks.voice_channel import message_queue
+from tasks.tts import message_queue
 
 load_dotenv()
 ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
@@ -15,7 +15,7 @@ ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
 def setup_events(bot):
     general_commands = GeneralCommands(bot)
     music_commands = MusicCommands(bot)
-    
+
     @bot.event
     async def on_ready():
         await bot.add_cog(general_commands)
@@ -27,7 +27,10 @@ def setup_events(bot):
 
     @bot.event
     async def on_command_error(ctx, exception):
-        if ENVIRONMENT == "development" and type(exception) not in Error.get_allowed_errors():
+        if (
+            ENVIRONMENT == "development"
+            and type(exception) not in Error.get_allowed_errors()
+        ):
             await ctx.send(exception)
             return
 
