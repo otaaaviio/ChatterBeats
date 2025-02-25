@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from enums.errors import Error
 from commands.general_commands import GeneralCommands
 from commands.music_commands import MusicCommands
-from tasks.tts import message_queue
+from tasks.queues import message_queue
 
 load_dotenv()
 ENVIRONMENT = os.getenv("ENVIRONMENT", "development")

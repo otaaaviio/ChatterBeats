@@ -3,10 +3,10 @@ import os
 import asyncio
 import discord
 from dotenv import load_dotenv
+from tasks.queues import message_queue
 
 load_dotenv()
 ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
-message_queue = asyncio.Queue(maxsize=100)
 
 
 async def process_tts(message, curr_lang):

@@ -2,11 +2,19 @@ import asyncio
 import logging
 import discord
 
-music_queue = asyncio.Queue(maxsize=100)
+from tasks.queues import music_queue
+from classes.music import Music
+from views.playback import PlaybackView
 
-
-async def process_msc(music):
+async def process_msc(music: Music):
     try:
+        embed = discord.Embed(
+            title="Now Playing:",
+            description=f"[{music.title}]({music.video_url}) - {music.playtime}",
+            color=discord.Color.green(),
+        )
+        await music.ctx.send(embed=embed, view=PlaybackView(bot=music.ctx.bot))
+
         ffmpeg_options = {
             "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
             "options": "-vn",
@@ -28,12 +36,11 @@ async def process_msc(music):
             else:
                 await music.ctx.send("You are not connected to a voice channel.")
                 return
-
+        
         voice_client.play(
             FFMPEG_SOURCE,
             after=lambda e: print(f"Erro: {e}") if e else logging.debug("Song ended"),
         )
-        await music.ctx.send(f"Playing: {music.title}")
 
         while voice_client.is_playing():
             await asyncio.sleep(1)

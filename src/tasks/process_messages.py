@@ -2,8 +2,9 @@ import asyncio
 import logging
 
 from enums.operation_modes import OperationMode
-from tasks.playback import process_msc, music_queue
-from tasks.tts import message_queue, process_tts
+from tasks.playback import process_msc
+from tasks.queues import message_queue, music_queue
+from tasks.tts import process_tts
 
 
 async def process_messages(bot):
