@@ -55,7 +55,9 @@ class GeneralCommands(commands.Cog):
     async def status(self, ctx):
         msgs = {
             "Mode": OperationMode.get_description_mode(ModeManager.get_mode().value),
-            "Language": Language.get_fullname_language(LanguageManager.get_language().value),
+            "Language": Language.get_fullname_language(
+                LanguageManager.get_language().value
+            ),
             "Channel": (
                 ctx.guild.voice_client.channel if ctx.guild.voice_client else "None"
             ),

@@ -37,7 +37,8 @@ class Language(Enum):
     @staticmethod
     def get_all_languages():
         return Language.__LANGUAGE_NAMES.items()
-    
+
+
 class LanguageManager:
     _curr_lang = Language.PT
 

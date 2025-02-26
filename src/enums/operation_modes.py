@@ -21,14 +21,15 @@ class OperationMode(Enum):
     @staticmethod
     def get_all_modes():
         return OperationMode.__DESPRIPTION_MODES.items()
-    
-class ModeManager():
+
+
+class ModeManager:
     _op_mode = OperationMode.TTS
-    
+
     @classmethod
     def get_mode(cls):
         return cls._op_mode
-    
+
     @classmethod
     def set_mode(cls, mode: str):
         cls._op_mode = OperationMode(mode)

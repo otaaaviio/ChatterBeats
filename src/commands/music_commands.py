@@ -69,4 +69,3 @@ class MusicCommands(commands.Cog):
             _ = music_queue.get()
 
         await music_queue.put(music)
-
