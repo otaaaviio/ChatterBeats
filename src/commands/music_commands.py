@@ -1,10 +1,9 @@
-import discord
 from discord.ext import commands
 import yt_dlp
 
 from classes.music import Music
 from tasks.queues import music_queue
-from enums.operation_modes import OperationMode
+from enums.operation_modes import ModeManager, OperationMode
 
 
 class MusicCommands(commands.Cog):
@@ -55,9 +54,7 @@ class MusicCommands(commands.Cog):
                 await ctx.send("You need to be in the same voice channel as the bot.")
                 return
 
-        op_mode = self.bot.get_cog("GeneralCommands").op_mode
-
-        if op_mode != OperationMode.PLAYBACK:
+        if ModeManager.get_mode() != OperationMode.PLAYBACK:
             await ctx.send("This command is disabled in this operation mode.")
             return
 
@@ -73,16 +70,3 @@ class MusicCommands(commands.Cog):
 
         await music_queue.put(music)
 
-    # @commands.command()
-    # async def autoplay(self, ctx):
-    #     self.autoplay = not self.autoplay
-    #     await ctx.send(f"Autoplay is now {'enabled' if self.autoplay else 'disabled'}.")
-
-    #     while not music_queue.full():
-    #         msc_info = self.get_related_music(self.curr_msc.id)
-    #         if msc_info:
-    #             music = Music(msc_info, ctx)
-    #             print(music)
-    #             await music_queue.put(music)
-    #         else:
-    #             break

@@ -1,30 +1,24 @@
 import asyncio
 import logging
 
-from enums.operation_modes import OperationMode
+from enums.operation_modes import ModeManager, OperationMode
 from tasks.playback import process_msc
 from tasks.queues import message_queue, music_queue
 from tasks.tts import process_tts
 
 
-async def process_messages(bot):
+async def process_messages():
     while True:
         try:
-            general_commands = bot.get_cog("GeneralCommands")
-
-            if general_commands is None:
-                continue
-
-            op_mode = general_commands.op_mode
-            curr_lang = general_commands.curr_lang.value
+            op_mode = ModeManager.get_mode()
 
             if op_mode == OperationMode.TTS:
-                msg = await message_queue.get()
-                if msg:
-                    await process_tts(msg, curr_lang)
+                if not message_queue.empty():
+                    msg = await message_queue.get()
+                    await process_tts(msg)
             elif op_mode == OperationMode.PLAYBACK:
-                msc = await music_queue.get()
-                if msc:
+                if not music_queue.empty():
+                    msc = await music_queue.get()
                     await process_msc(msc)
         except Exception as err:
             logging.error(err)

@@ -3,14 +3,17 @@ import os
 import asyncio
 import discord
 from dotenv import load_dotenv
+from enums.languages import LanguageManager
 from tasks.queues import message_queue
 
 load_dotenv()
 ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
 
 
-async def process_tts(message, curr_lang):
+async def process_tts(message):
     try:
+        curr_lang = LanguageManager.get_language().value
+
         voice_channel = message.author.voice.channel
         bot_voice_channel = message.guild.voice_client
         if bot_voice_channel and message.content:

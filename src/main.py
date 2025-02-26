@@ -17,7 +17,7 @@ intents.message_content = True
 
 class OtaBot(commands.Bot):
     async def setup_hook(self):
-        self.bg_task = asyncio.create_task(process_messages(self))
+        self.bg_task = asyncio.create_task(process_messages())
 
 
 bot = OtaBot(command_prefix=".", intents=intents)

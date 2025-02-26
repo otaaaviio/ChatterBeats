@@ -2,6 +2,17 @@ from enum import Enum
 
 
 class Language(Enum):
+    PT = "pt"
+    EN = "en"
+    ES = "es"
+    FR = "fr"
+    DE = "de"
+    IT = "it"
+    RU = "ru"
+    JA = "ja"
+    KO = "ko"
+    ZH = "zh"
+
     __LANGUAGE_NAMES = {
         "pt": "Portuguese",
         "en": "English",
@@ -15,19 +26,8 @@ class Language(Enum):
         "zh": "Chinese (Mandarin)",
     }
 
-    PT = "pt"
-    EN = "en"
-    ES = "es"
-    FR = "fr"
-    DE = "de"
-    IT = "it"
-    RU = "ru"
-    JA = "ja"
-    KO = "ko"
-    ZH = "zh"
-
     @staticmethod
-    def get_language(lang: str):
+    def get_fullname_language(lang: str):
         return Language.__LANGUAGE_NAMES[lang]
 
     @staticmethod
@@ -37,3 +37,14 @@ class Language(Enum):
     @staticmethod
     def get_all_languages():
         return Language.__LANGUAGE_NAMES.items()
+    
+class LanguageManager:
+    _curr_lang = Language.PT
+
+    @classmethod
+    def get_language(cls):
+        return cls._curr_lang
+
+    @classmethod
+    def set_language(cls, lang: str):
+        cls._curr_lang = Language(lang)

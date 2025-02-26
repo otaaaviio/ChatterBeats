@@ -6,6 +6,7 @@ from tasks.queues import music_queue
 from classes.music import Music
 from views.playback import PlaybackView
 
+
 async def process_msc(music: Music):
     try:
         embed = discord.Embed(
@@ -36,7 +37,7 @@ async def process_msc(music: Music):
             else:
                 await music.ctx.send("You are not connected to a voice channel.")
                 return
-        
+
         voice_client.play(
             FFMPEG_SOURCE,
             after=lambda e: print(f"Erro: {e}") if e else logging.debug("Song ended"),

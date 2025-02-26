@@ -2,21 +2,19 @@ import os
 import sys
 import discord
 from discord.ext import commands
-from enums.languages import Language
-from enums.operation_modes import OperationMode
+from enums.languages import Language, LanguageManager
+from enums.operation_modes import ModeManager, OperationMode
 
 
 class GeneralCommands(commands.Cog):
     def __init__(self, bot):
-        self.op_mode: OperationMode = OperationMode.PLAYBACK
-        self.curr_lang: Language = Language.PT
         self.bot: commands.Bot = bot
 
     @commands.command(description="Set the language for OtaBot.")
     async def setlang(self, ctx, lang):
         if lang in Language.get_available_languages():
-            self.curr_lang = Language(lang)
-            await ctx.send(f"Language set to {Language.get_language(lang)}")
+            LanguageManager.set_language(lang)
+            await ctx.send(f"Language set to {Language.get_fullname_language(lang)}")
         else:
             await ctx.send(
                 f"Language not available. Type .languages to see all available languages."
@@ -56,8 +54,8 @@ class GeneralCommands(commands.Cog):
     )
     async def status(self, ctx):
         msgs = {
-            "Mode": OperationMode.get_mode(self.op_mode.value),
-            "Language": Language.get_language(self.curr_lang.value),
+            "Mode": OperationMode.get_description_mode(ModeManager.get_mode().value),
+            "Language": Language.get_fullname_language(LanguageManager.get_language().value),
             "Channel": (
                 ctx.guild.voice_client.channel if ctx.guild.voice_client else "None"
             ),
@@ -75,13 +73,15 @@ class GeneralCommands(commands.Cog):
         description="Set the mode for OtaBot. Type .modes to see all available modes."
     )
     async def setop(self, ctx, mode):
-        if mode == self.op_mode.value:
-            await ctx.send(f"Mode is already set to {OperationMode.get_mode(mode)}.")
+        if mode == ModeManager.get_mode().value:
+            await ctx.send(
+                f"Mode is already set to {OperationMode.get_description_mode(mode)}."
+            )
             return
 
         if mode in OperationMode.get_available_modes():
-            self.op_mode = OperationMode(mode)
-            await ctx.send(f"Mode set to {OperationMode.get_mode(mode)}.")
+            ModeManager.set_mode(mode)
+            await ctx.send(f"Mode set to {OperationMode.get_description_mode(mode)}.")
             return
 
         await ctx.send(f"Mode not available. Type .modes to see all available modes.")
