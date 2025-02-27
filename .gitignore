@@ -1,2 +1,8 @@
 venv
 .env
+__pycache__/
+.vscode/
+logs/
+**.mp3
+build/
+otabot.egg-info/
