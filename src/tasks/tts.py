@@ -17,7 +17,11 @@ async def process_tts(message):
         voice_channel = message.author.voice.channel
         bot_voice_channel = message.guild.voice_client
         if bot_voice_channel and message.content:
-            if voice_channel and voice_channel == bot_voice_channel.channel:
+            is_same_channel = (
+                voice_channel and voice_channel == bot_voice_channel.channel
+            )
+            is_same_chat = message.channel == bot_voice_channel.channel
+            if is_same_channel and is_same_chat:
                 tts_audio_path = "tts_audio.mp3"
                 text_to_say = message.content
 

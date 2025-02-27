@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from enums.errors import Error
 from commands.general_commands import GeneralCommands
 from commands.music_commands import MusicCommands
+from enums.operation_modes import ModeManager, OperationMode
 from tasks.queues import message_queue
 
 load_dotenv()
@@ -47,7 +48,10 @@ def setup_events(bot):
 
         await bot.process_commands(message)
 
-        if not message.content.startswith("."):
+        if (
+            not message.content.startswith(".")
+            and ModeManager.get_mode() == OperationMode.TTS
+        ):
             if message_queue.full():
                 _ = await message_queue.get()
 
