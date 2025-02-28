@@ -108,16 +108,3 @@ class GeneralCommands(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @commands.command(hidden=True)
-    async def reset(self, ctx):
-        if ctx.author.name != "ota_targaryen":
-            ctx.send("You don't have permission to use this command.")
-            return
-
-        if self.bot.voice_clients:
-            for vc in self.bot.voice_clients:
-                await vc.disconnect()
-
-        main_path = os.path.join(os.path.dirname(__file__), "..", "main.py")
-        main_path = os.path.abspath(main_path)
-        os.execv(sys.executable, [sys.executable, main_path])
