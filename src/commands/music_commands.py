@@ -15,9 +15,14 @@ class MusicCommands(commands.Cog):
         ydl_opts = {
             "quiet": True,
             "noplaylist": True,
-            "format": "bestaudio",
+            "format": "bestaudio/best",
             "max_downloads": 1,
+            "no_warnings": True,
+            "simulate": True,
             "noremem": True,
+            "skip_download": True,
+            "default_search": "ytsearch",
+            "force_generic_extractor": True,
         }
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:

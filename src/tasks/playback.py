@@ -38,8 +38,9 @@ async def process_msc(music: Music):
             "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5 -nostdin",
             "options": "-vn -loglevel panic -bufsize 64k",
         }
+        url = music.url
 
-        FFMPEG_SOURCE = discord.FFmpegPCMAudio(music.url, **ffmpeg_options)
+        FFMPEG_SOURCE = discord.FFmpegPCMAudio(url, **ffmpeg_options)
 
         voice_client.play(
             FFMPEG_SOURCE,
