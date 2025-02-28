@@ -11,7 +11,7 @@ ChatterBeats is a Discord bot that can reproduce messages in voice chat. It was 
 
 ## Commands
 
-Here are some of the commands you can use with Otavio's Speaker:
+Here are some of the commands you can use with ChatterBeats:
 
 - `.join`: Makes the bot join the user's voice channel.
 - `.leave`: Makes the bot leave the voice channel.
