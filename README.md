@@ -1,6 +1,6 @@
-# Otavio's Speaker
+# ChatterBeats
 
-Otavio's Speaker is a Discord bot that can reproduce messages in voice chat. It was created by @ota_targaryen and has several useful features to interact with users on the server.
+ChatterBeats is a Discord bot that can reproduce messages in voice chat. It was created by @ota_targaryen and has several useful features to interact with users on the server.
 
 ## Features
 
@@ -20,7 +20,7 @@ Here are some of the commands you can use with Otavio's Speaker:
 - `.disable`: Disables the bot from speaking messages in chat.
 - `.set-lang <language>`: Sets the language for the bot to speak messages in chat.
 - `.languages`: Shows all available languages.
-- `.otabot`: Displays information about the bot.
+- `.cb`: Displays information about the bot.
 
 ## Contribution
-Contributions are welcome! Feel free to open issues and pull requests to improve Otavio's Speaker.
+Contributions are welcome! Feel free to open issues and pull requests to improve ChatterBeats.
