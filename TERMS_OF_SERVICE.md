@@ -1,7 +1,7 @@
 # Terms of Service
 
 ## Introduction
-Welcome to OtaBot. By using our bot, you agree to comply with and be bound by the following terms and conditions. Please read these terms carefully.
+Welcome to ChatterBeats. By using our bot, you agree to comply with and be bound by the following terms and conditions. Please read these terms carefully.
 
 ## Use of Our Service
 - **Eligibility**: You must be at least 13 years old to use our bot.

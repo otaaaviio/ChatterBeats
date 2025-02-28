@@ -1,7 +1,7 @@
 # Privacy Policy
 
 ## Introduction
-Welcome to OtaBot. We value your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and disclose your information when you use our services.
+Welcome to ChatterBeats. We value your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and disclose your information when you use our services.
 
 ## Information We Collect
 - **Personal Information**: We may collect personal information such as your name, email address, and Discord user ID when you interact with our bot.

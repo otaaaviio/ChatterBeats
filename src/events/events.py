@@ -22,7 +22,7 @@ def setup_events(bot):
         await bot.add_cog(general_commands)
         await bot.add_cog(music_commands)
         await bot.change_presence(
-            activity=discord.Activity(type=discord.ActivityType.playing, name=".otabot")
+            activity=discord.Activity(type=discord.ActivityType.playing, name=".cb")
         )
         print(f"bot working: {bot.user} in {ENVIRONMENT} mode")
 

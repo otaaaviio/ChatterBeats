@@ -6,7 +6,7 @@ log_dir = "logs"
 if not os.path.exists(log_dir):
     os.makedirs(log_dir)
 
-log_filename = os.path.join(log_dir, "otabot.log")
+log_filename = os.path.join(log_dir, "cb.log")
 
 log_handler = RotatingFileHandler(log_filename, maxBytes=5 * 1024 * 1024, backupCount=5)
 

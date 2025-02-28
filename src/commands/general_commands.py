@@ -10,7 +10,7 @@ class GeneralCommands(commands.Cog):
     def __init__(self, bot):
         self.bot: commands.Bot = bot
 
-    @commands.command(description="Set the language for OtaBot.")
+    @commands.command(description="Set the language for ChatterBeats.")
     async def setlang(self, ctx, lang):
         if lang in Language.get_available_languages():
             LanguageManager.set_language(lang)
@@ -20,10 +20,10 @@ class GeneralCommands(commands.Cog):
                 f"Language not available. Type .languages to see all available languages."
             )
 
-    @commands.command(description="Get all available languages for OtaBot.")
+    @commands.command(description="Get all available languages for ChatterBeats.")
     async def languages(self, ctx):
         embed = discord.Embed(
-            title="Available languages for OtaBot:",
+            title="Available languages for ChatterBeats:",
             description="\n".join(
                 f"**{value}**: {key}" for key, value in Language.get_all_languages()
             ),
@@ -47,10 +47,10 @@ class GeneralCommands(commands.Cog):
             await ctx.guild.voice_client.disconnect()
             await ctx.send(f"Left voice channel.")
         else:
-            await ctx.send(f"OtaBot is not in a voice channel.")
+            await ctx.send(f"ChatterBeats is not in a voice channel.")
 
     @commands.command(
-        description="Get the current status of OtaBot, like language, channel and if it is enabled to speak messages."
+        description="Get the current status of ChatterBeats, like language, channel and if it is enabled to speak messages."
     )
     async def status(self, ctx):
         msgs = {
@@ -63,7 +63,7 @@ class GeneralCommands(commands.Cog):
             ),
         }
         embed = discord.Embed(
-            title="OtaBot status:",
+            title="ChatterBeats status:",
             description="\n\n".join(
                 f"**{key}**: {value}" for key, value in msgs.items()
             ),
@@ -72,7 +72,7 @@ class GeneralCommands(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command(
-        description="Set the mode for OtaBot. Type .modes to see all available modes."
+        description="Set the mode for ChatterBeats. Type .modes to see all available modes."
     )
     async def setop(self, ctx, mode):
         if mode == ModeManager.get_mode().value:
@@ -88,10 +88,10 @@ class GeneralCommands(commands.Cog):
 
         await ctx.send(f"Mode not available. Type .modes to see all available modes.")
 
-    @commands.command(description="Get all available modes for OtaBot.")
+    @commands.command(description="Get all available modes for ChatterBeats.")
     async def modes(self, ctx):
         embed = discord.Embed(
-            title="Available modes for OtaBot:",
+            title="Available modes for ChatterBeats:",
             description="\n".join(
                 f"**{value}**: {key}" for key, value in OperationMode.get_all_modes()
             ),
@@ -99,11 +99,11 @@ class GeneralCommands(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @commands.command(description="Get to know OtaBot.")
-    async def otabot(self, ctx):
+    @commands.command(description="Get to know ChatterBeats.")
+    async def cb(self, ctx):
         embed = discord.Embed(
             title="Hello!",
-            description="I am OtaBot, a bot created by @ota_targaryen.\n\n I can join your voice channel and speak messages in chat.\n\n Type .help to see all available commands.",
+            description="I am ChatterBeats, a bot created by @ota_targaryen.\n\n I can join your voice channel and speak messages in chat.\n\n Type .help to see all available commands.",
             color=discord.Color.blue(),
         )
         await ctx.send(embed=embed)
