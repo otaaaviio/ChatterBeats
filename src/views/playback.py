@@ -3,9 +3,10 @@ from tasks.queues import music_queue
 
 
 class PlaybackView(discord.ui.View):
-    def __init__(self, *, bot):
+    def __init__(self, *, bot, music):
         super().__init__()
         self.bot = bot
+        self.curr_msc = music
 
     @discord.ui.button(emoji="⏯️", style=discord.ButtonStyle.gray)
     async def button_resume_or_pause(
@@ -29,13 +30,7 @@ class PlaybackView(discord.ui.View):
     async def button_queue(
         self, interaction: discord.Interaction, button: discord.ui.Button
     ):
-        await list_queue(interaction)
-
-    @discord.ui.button(emoji="🔁", style=discord.ButtonStyle.gray)
-    async def button_autoplay(
-        self, interaction: discord.Interaction, button: discord.ui.Button
-    ):
-        await autoplay(interaction)
+        await list_queue(interaction, self.curr_msc)
 
 
 async def resume_or_pause(interaction: discord.Interaction):
@@ -74,17 +69,26 @@ async def stop(interaction: discord.Interaction):
             )
 
 
-async def list_queue(interaction: discord.Interaction):
-    if music_queue.empty():
+async def list_queue(interaction: discord.Interaction, curr_msc):
+    queue = []
+
+    if curr_msc:
+        queue.append(curr_msc)
+
+    for _ in range(music_queue.qsize()):
+        song = await music_queue.get()
+        queue.append(song)
+        await music_queue.put(song)
+
+    if not queue:
         await interaction.response.send_message("The queue is empty.", ephemeral=True)
-    else:
-        queue = []
-        for i in range(music_queue.qsize()):
-            queue.append(await music_queue.get())
-        await interaction.response.send_message(queue, ephemeral=True)
-        for i in range(len(queue)):
-            await music_queue.put(queue[i])
+        return
 
-
-async def autoplay(interaction: discord.Interaction):
-    pass
+    embed = discord.Embed(
+        title="Queue:",
+        description="\n".join(
+            [f"{i + 1}. [{msc.title}]({msc.url})" for i, msc in enumerate(queue)]
+        ),
+        color=discord.Color.green(),
+    )
+    await interaction.response.send_message(embed=embed, ephemeral=True)

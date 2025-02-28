@@ -9,12 +9,16 @@ from enums.operation_modes import ModeManager, OperationMode
 class MusicCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.curr_msc = None
 
     def get_related_music(self, video_id):
         ydl_opts = {
             "quiet": True,
             "format": "bestaudio",
+            "max_downloads": 1,
+            "noremem": True,
             "noplaylist": True,
+            "extract_flat": True,
         }
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:

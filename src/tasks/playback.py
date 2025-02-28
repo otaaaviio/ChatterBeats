@@ -14,7 +14,9 @@ async def process_msc(music: Music):
             description=f"[{music.title}]({music.video_url}) - {music.playtime}",
             color=discord.Color.green(),
         )
-        await music.ctx.send(embed=embed, view=PlaybackView(bot=music.ctx.bot))
+        await music.ctx.send(
+            embed=embed, view=PlaybackView(bot=music.ctx.bot, music=music)
+        )
 
         ffmpeg_options = {
             "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
