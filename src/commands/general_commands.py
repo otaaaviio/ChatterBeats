@@ -2,8 +2,13 @@ import os
 import sys
 import discord
 from discord.ext import commands
+from dotenv import load_dotenv
 from enums.languages import Language, LanguageManager
 from enums.operation_modes import ModeManager, OperationMode
+
+
+load_dotenv()
+OWNER = os.getenv("OWNER", None)
 
 
 class GeneralCommands(commands.Cog):
@@ -11,7 +16,7 @@ class GeneralCommands(commands.Cog):
         self.bot: commands.Bot = bot
 
     @commands.command(description="Set the language for OtaBot.")
-    async def setlang(self, ctx, lang):
+    async def set_lang(self, ctx, lang):
         if lang in Language.get_available_languages():
             LanguageManager.set_language(lang)
             await ctx.send(f"Language set to {Language.get_fullname_language(lang)}")
@@ -74,7 +79,7 @@ class GeneralCommands(commands.Cog):
     @commands.command(
         description="Set the mode for OtaBot. Type .modes to see all available modes."
     )
-    async def setop(self, ctx, mode):
+    async def set_mode(self, ctx, mode):
         if mode == ModeManager.get_mode().value:
             await ctx.send(
                 f"Mode is already set to {OperationMode.get_description_mode(mode)}."
@@ -103,14 +108,14 @@ class GeneralCommands(commands.Cog):
     async def otabot(self, ctx):
         embed = discord.Embed(
             title="Hello!",
-            description="I am OtaBot, a bot created by @ota_targaryen.\n\n I can join your voice channel and speak messages in chat.\n\n Type .help to see all available commands.",
+            description="I am OtaBot, a bot created by @otaaaviio.\n\n I can join your voice channel and speak messages in chat.\n\n Type .help to see all available commands.",
             color=discord.Color.blue(),
         )
         await ctx.send(embed=embed)
 
     @commands.command(hidden=True)
     async def reset(self, ctx):
-        if ctx.author.name != "ota_targaryen":
+        if ctx.author.name != OWNER:
             ctx.send("You don't have permission to use this command.")
             return
 

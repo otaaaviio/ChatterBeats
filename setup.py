@@ -5,11 +5,6 @@ setup(
     version="0.1",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
-    install_requires=[
-        "discord.py",
-        "python-dotenv",
-        "gtts",
-    ],
     entry_points={
         "console_scripts": [
             "otabot=main:main",
@@ -17,7 +12,7 @@ setup(
     },
     author="Otávio Gonçalves",
     author_email="otavio18gl@gmail.com",
-    description="A discord bot that speaks messages in chat.",
+    description="A discord bot that speaks messages in chat or plays music.",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/otaaaviio/discord-bot",
