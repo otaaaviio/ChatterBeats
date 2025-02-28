@@ -36,7 +36,7 @@ async def process_tts(message):
                     )
 
                     while bot_voice_channel.is_playing():
-                        await asyncio.sleep(1)
+                        await asyncio.sleep(0.1)
 
                     os.remove(tts_audio_path)
     except Exception as err:

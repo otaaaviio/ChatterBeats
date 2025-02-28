@@ -27,4 +27,4 @@ async def process_messages():
         except Exception as err:
             logging.error(err)
         finally:
-            await asyncio.sleep(1)
+            await asyncio.sleep(0.1)
