@@ -24,7 +24,7 @@ class OperationMode(Enum):
 
 
 class ModeManager:
-    _op_mode = OperationMode.TTS
+    _op_mode = OperationMode.PLAYBACK
 
     @classmethod
     def get_mode(cls):
