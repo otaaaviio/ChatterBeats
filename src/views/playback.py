@@ -31,12 +31,6 @@ class PlaybackView(discord.ui.View):
     ):
         await list_queue(interaction)
 
-    @discord.ui.button(emoji="🔁", style=discord.ButtonStyle.gray)
-    async def button_autoplay(
-        self, interaction: discord.Interaction, button: discord.ui.Button
-    ):
-        await autoplay(interaction)
-
 
 async def resume_or_pause(interaction: discord.Interaction):
     if interaction.guild.voice_client:
@@ -84,7 +78,3 @@ async def list_queue(interaction: discord.Interaction):
         await interaction.response.send_message(queue, ephemeral=True)
         for i in range(len(queue)):
             await music_queue.put(queue[i])
-
-
-async def autoplay(interaction: discord.Interaction):
-    pass
