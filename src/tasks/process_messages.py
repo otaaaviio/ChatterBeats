@@ -13,18 +13,14 @@ async def process_messages():
             op_mode = ModeManager.get_mode()
 
             if op_mode == OperationMode.TTS:
-                try:
-                    msg = await asyncio.wait_for(message_queue.get(), timeout=1)
-                    await process_tts(msg)
-                except asyncio.TimeoutError:
-                    pass
+                msg = await asyncio.wait_for(message_queue.get(), timeout=1)
+                await process_tts(msg)
             elif op_mode == OperationMode.PLAYBACK:
-                try:
-                    msc = await asyncio.wait_for(music_queue.get(), timeout=1)
-                    await process_msc(msc)
-                except asyncio.TimeoutError:
-                    pass
+                msc = await asyncio.wait_for(music_queue.get(), timeout=1)
+                await process_msc(msc)
         except Exception as err:
             logging.error(err)
+        except asyncio.TimeoutError:
+            pass
         finally:
-            await asyncio.sleep(1)
+            await asyncio.sleep(0.2)

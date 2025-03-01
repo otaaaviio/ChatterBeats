@@ -15,7 +15,7 @@ async def process_msc(music: Music):
             color=discord.Color.green(),
         )
         message = await music.ctx.send(
-            embed=embed, view=PlaybackView(bot=music.ctx.bot)
+            embed=embed, view=PlaybackView(bot=music.ctx.bot, music=music)
         )
 
         ffmpeg_options = {
@@ -46,7 +46,10 @@ async def process_msc(music: Music):
         )
 
         while voice_client.is_playing():
-            await asyncio.sleep(1)
+            await asyncio.sleep(0.2)
+
+        if voice_client.is_paused():
+            await asyncio.sleep(0.2)
 
         await message.delete()
 
