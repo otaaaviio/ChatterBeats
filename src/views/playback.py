@@ -24,7 +24,7 @@ class PlaybackView(discord.ui.View):
     async def button_queue(
         self, interaction: discord.Interaction, button: discord.ui.Button
     ):
-        await list_queue(interaction)
+        await list_queue(interaction, self.curr_msc)
 
 
 async def resume_or_pause(interaction: discord.Interaction):
@@ -50,6 +50,11 @@ async def skip(interaction: discord.Interaction):
             await interaction.response.send_message(
                 "I'm not playing anything.", ephemeral=True
             )
+
+    if music_queue.qsize() == 0:
+        await interaction.response.send_message(
+            "The music queue is currently empty.", ephemeral=True
+        )
 
 
 async def list_queue(interaction: discord.Interaction, curr_msc):
