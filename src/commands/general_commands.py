@@ -11,7 +11,7 @@ class GeneralCommands(commands.Cog):
         self.bot: commands.Bot = bot
 
     @commands.command(description="Set the language for ChatterBeats.")
-    async def setlang(self, ctx, lang):
+    async def set_lang(self, ctx, lang):
         if lang in Language.get_available_languages():
             LanguageManager.set_language(lang)
             await ctx.send(f"Language set to {Language.get_fullname_language(lang)}")
@@ -74,7 +74,7 @@ class GeneralCommands(commands.Cog):
     @commands.command(
         description="Set the mode for ChatterBeats. Type .modes to see all available modes."
     )
-    async def setop(self, ctx, mode):
+    async def set_mode(self, ctx, mode):
         if mode == ModeManager.get_mode().value:
             await ctx.send(
                 f"Mode is already set to {OperationMode.get_description_mode(mode)}."
@@ -107,4 +107,3 @@ class GeneralCommands(commands.Cog):
             color=discord.Color.blue(),
         )
         await ctx.send(embed=embed)
-
