@@ -45,10 +45,7 @@ async def process_msc(music: Music):
             after=lambda e: print(f"Erro: {e}") if e else logging.debug("Song ended"),
         )
 
-        while voice_client.is_playing():
-            await asyncio.sleep(0.2)
-
-        while voice_client.is_paused():
+        while voice_client.is_playing() or voice_client.is_paused():
             await asyncio.sleep(0.2)
 
         await message.delete()
