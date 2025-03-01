@@ -48,7 +48,7 @@ async def process_msc(music: Music):
         while voice_client.is_playing():
             await asyncio.sleep(0.2)
 
-        if voice_client.is_paused():
+        while voice_client.is_paused():
             await asyncio.sleep(0.2)
 
         await message.delete()

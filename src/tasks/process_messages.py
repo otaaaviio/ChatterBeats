@@ -18,9 +18,9 @@ async def process_messages():
             elif op_mode == OperationMode.PLAYBACK:
                 msc = await asyncio.wait_for(music_queue.get(), timeout=1)
                 await process_msc(msc)
-        except Exception as err:
-            logging.error(err)
         except asyncio.TimeoutError:
             pass
+        except Exception as err:
+            logging.error(err)
         finally:
             await asyncio.sleep(0.2)
