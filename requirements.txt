@@ -3,5 +3,7 @@ python-dotenv
 pynacl
 black
 yt_dlp
-gtts
+gTTS
 discord
+asyncio
+logging
