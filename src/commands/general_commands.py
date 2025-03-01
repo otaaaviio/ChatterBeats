@@ -54,9 +54,7 @@ class GeneralCommands(commands.Cog):
         else:
             await ctx.send(f"ChatterBeats is not in a voice channel.")
 
-    @commands.command(
-        help="Get the current status of ChatterBeats, like language, channel and if it is enabled to speak messages."
-    )
+    @commands.command(help="Get the current status of ChatterBeats.")
     async def status(self, ctx):
         msgs = {
             "Mode": OperationMode.get_description_mode(ModeManager.get_mode().value),
@@ -76,9 +74,7 @@ class GeneralCommands(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @commands.command(
-        help="Set the mode for ChatterBeats. Type .modes to see all available modes."
-    )
+    @commands.command(help="Set the mode for ChatterBeats.")
     async def set_mode(self, ctx, mode):
         if mode == ModeManager.get_mode().value:
             await ctx.send(
