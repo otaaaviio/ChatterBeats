@@ -8,7 +8,7 @@ class GeneralCommands(commands.Cog):
     def __init__(self, bot):
         self.bot: commands.Bot = bot
 
-    @commands.command(description="Set the language for ChatterBeats.")
+    @commands.command(help="Set the language for ChatterBeats.")
     async def set_lang(self, ctx, lang):
         if lang == LanguageManager.get_language().value:
             await ctx.send(
@@ -25,7 +25,7 @@ class GeneralCommands(commands.Cog):
             f"Language not available. Type .languages to see all available languages."
         )
 
-    @commands.command(description="Get all available languages for ChatterBeats.")
+    @commands.command(help="Get all available languages for ChatterBeats.")
     async def languages(self, ctx):
         embed = discord.Embed(
             title="Available languages for ChatterBeats:",
@@ -36,7 +36,7 @@ class GeneralCommands(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @commands.command(description="Join the voice channel.")
+    @commands.command(help="Join the voice channel.")
     async def join(self, ctx):
         if ctx.author.voice:
             channel = ctx.author.voice.channel
@@ -46,7 +46,7 @@ class GeneralCommands(commands.Cog):
         else:
             await ctx.send(f"You need to be in a voice channel to use this command.")
 
-    @commands.command(description="Leave the voice channel.", title="Leave")
+    @commands.command(help="Leave the voice channel.", title="Leave")
     async def leave(self, ctx):
         if ctx.guild.voice_client:
             await ctx.guild.voice_client.disconnect()
@@ -55,7 +55,7 @@ class GeneralCommands(commands.Cog):
             await ctx.send(f"ChatterBeats is not in a voice channel.")
 
     @commands.command(
-        description="Get the current status of ChatterBeats, like language, channel and if it is enabled to speak messages."
+        help="Get the current status of ChatterBeats, like language, channel and if it is enabled to speak messages."
     )
     async def status(self, ctx):
         msgs = {
@@ -77,7 +77,7 @@ class GeneralCommands(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command(
-        description="Set the mode for ChatterBeats. Type .modes to see all available modes."
+        help="Set the mode for ChatterBeats. Type .modes to see all available modes."
     )
     async def set_mode(self, ctx, mode):
         if mode == ModeManager.get_mode().value:
@@ -93,7 +93,7 @@ class GeneralCommands(commands.Cog):
 
         await ctx.send(f"Mode not available. Type .modes to see all available modes.")
 
-    @commands.command(description="Get all available modes for ChatterBeats.")
+    @commands.command(help="Get all available modes for ChatterBeats.")
     async def modes(self, ctx):
         embed = discord.Embed(
             title="Available modes for ChatterBeats:",
@@ -104,7 +104,7 @@ class GeneralCommands(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @commands.command(description="Get to know ChatterBeats.")
+    @commands.command(help="Get to know ChatterBeats.")
     async def cb(self, ctx):
         embed = discord.Embed(
             title="Hello!",

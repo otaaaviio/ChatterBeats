@@ -29,7 +29,7 @@ class MusicCommands(commands.Cog):
 
             return None
 
-    @commands.command(description="Play a song from youtube.")
+    @commands.command(help="Play a song from youtube.")
     async def play(self, ctx, query: str):
         if ctx.voice_client is not None:
             if ctx.author.voice is None:
