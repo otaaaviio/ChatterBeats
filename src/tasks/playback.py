@@ -14,7 +14,9 @@ async def process_msc(music: Music):
             description=f"[{music.title}]({music.video_url}) - {music.playtime}",
             color=discord.Color.green(),
         )
-        message = await music.ctx.send(embed=embed, view=PlaybackView(bot=music.ctx.bot))
+        message = await music.ctx.send(
+            embed=embed, view=PlaybackView(bot=music.ctx.bot)
+        )
 
         ffmpeg_options = {
             "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
@@ -45,7 +47,7 @@ async def process_msc(music: Music):
 
         while voice_client.is_playing():
             await asyncio.sleep(1)
-        
+
         await message.delete()
 
     except Exception as e:

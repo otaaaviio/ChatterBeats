@@ -15,10 +15,10 @@ class MusicCommands(commands.Cog):
             "quiet": True,
             "noplaylist": True,
             "format": "bestaudio",
-             "http_headers": {
+            "http_headers": {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
             },
-             "cookiefile": "cookies.txt",
+            "cookiefile": "cookies.txt",
         }
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:

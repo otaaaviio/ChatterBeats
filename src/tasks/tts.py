@@ -32,7 +32,9 @@ async def process_tts(message):
 
                 if os.path.exists(tts_audio_path):
                     bot_voice_channel.play(
-                        discord.FFmpegPCMAudio(tts_audio_path),
+                        discord.FFmpegPCMAudio(
+                            tts_audio_path, options="-loglevel debug"
+                        ),
                         after=lambda e: logging.debug("Audio finished"),
                     )
 
