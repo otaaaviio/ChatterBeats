@@ -12,13 +12,20 @@ class GeneralCommands(commands.Cog):
 
     @commands.command(description="Set the language for ChatterBeats.")
     async def set_lang(self, ctx, lang):
+        if lang == LanguageManager.get_language().value:
+            await ctx.send(
+                f"Language is already set to {Language.get_fullname_language(lang)}."
+            )
+            return
+
         if lang in Language.get_available_languages():
             LanguageManager.set_language(lang)
             await ctx.send(f"Language set to {Language.get_fullname_language(lang)}")
-        else:
-            await ctx.send(
-                f"Language not available. Type .languages to see all available languages."
-            )
+            return
+
+        await ctx.send(
+            f"Language not available. Type .languages to see all available languages."
+        )
 
     @commands.command(description="Get all available languages for ChatterBeats.")
     async def languages(self, ctx):
