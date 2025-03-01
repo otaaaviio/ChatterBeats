@@ -10,30 +10,15 @@ class MusicCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    def get_related_music(self, video_id):
-        ydl_opts = {
-            "quiet": True,
-            "format": "bestaudio",
-            "noplaylist": True,
-        }
-
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            info = ydl.extract_info(
-                f"https://www.youtube.com/watch?v={video_id}", download=False
-            )
-            if "related_videos" in info:
-                for related in info["related_videos"]:
-                    if "id" in related:
-                        related_info = self.get_music_from_yt(related["id"])
-                        if related_info:
-                            return related_info
-        return None
-
     def get_music_from_yt(self, query):
         ydl_opts = {
             "quiet": True,
             "noplaylist": True,
             "format": "bestaudio",
+             "http_headers": {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            },
+             "cookiefile": "cookies.txt",
         }
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:

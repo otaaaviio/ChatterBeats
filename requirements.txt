@@ -5,5 +5,3 @@ black
 yt_dlp
 gTTS
 discord
-asyncio
-logging
