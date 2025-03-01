@@ -1,8 +1,7 @@
 from discord.ext import commands
-from enum import Enum
 
 
-class Error(Enum):
+class Error:
     __ALLOWED_ERRORS = [
         commands.MissingPermissions,
         commands.MissingRole,

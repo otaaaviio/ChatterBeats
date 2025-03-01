@@ -3,3 +3,4 @@ python-dotenv
 pynacl
 black
 yt_dlp
+gtts

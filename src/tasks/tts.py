@@ -3,6 +3,7 @@ import os
 import asyncio
 import discord
 from dotenv import load_dotenv
+from gtts import gTTS
 from enums.languages import LanguageManager
 from tasks.queues import message_queue
 
@@ -25,9 +26,9 @@ async def process_tts(message):
                 tts_audio_path = "tts_audio.mp3"
                 text_to_say = message.content
 
-                os.system(
-                    f"gtts-cli '{text_to_say}' --lang {curr_lang} --output {tts_audio_path}"
-                )
+                tts = gTTS(text=text_to_say, lang=curr_lang)
+
+                tts.save(tts_audio_path)
 
                 if os.path.exists(tts_audio_path):
                     bot_voice_channel.play(
