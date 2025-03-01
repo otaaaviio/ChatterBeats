@@ -108,7 +108,7 @@ class GeneralCommands(commands.Cog):
     async def cb(self, ctx):
         embed = discord.Embed(
             title="Hello!",
-            description="I am ChatterBeats, a bot created by @ota_targaryen.\n\n I can join your voice channel and speak messages in chat.\n\n Type .help to see all available commands.",
+            description="I am ChatterBeats, a open source bot created by @ota_targaryen (otavio18gl@gmail.com). I am here to help you to listen to your messages in a voice channel or play musics. Type .help to see all available commands.",
             color=discord.Color.blue(),
         )
         await ctx.send(embed=embed)

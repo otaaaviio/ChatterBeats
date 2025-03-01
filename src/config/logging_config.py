@@ -1,6 +1,15 @@
 import logging
 from logging.handlers import RotatingFileHandler
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
+
+__LOG_LEVEL = {
+    "development": logging.DEBUG,
+    "production": logging.INFO,
+}
 
 log_dir = "logs"
 if not os.path.exists(log_dir):
@@ -13,7 +22,7 @@ log_handler = RotatingFileHandler(log_filename, maxBytes=5 * 1024 * 1024, backup
 log_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
 
 logging.basicConfig(
-    level=logging.INFO,
+    level=__LOG_LEVEL[ENVIRONMENT],
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[
         log_handler,

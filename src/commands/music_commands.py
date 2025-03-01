@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 import yt_dlp
 
@@ -54,3 +55,9 @@ class MusicCommands(commands.Cog):
             _ = music_queue.get()
 
         await music_queue.put(music)
+
+        embed = discord.Embed(
+            description=f"Added [{music.title}]({music.video_url}) - `{music.playtime}`",
+            color=discord.Color.green(),
+        )
+        await ctx.send(embed=embed)
