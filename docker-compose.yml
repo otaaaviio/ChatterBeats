@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  chatterbeats:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: chatterbeats-container
+    command: ["python", "./src/main.py"]
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"

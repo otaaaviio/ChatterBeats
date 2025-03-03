@@ -1,0 +1,14 @@
+venv/
+.env
+__pycache__/
+.vscode/
+logs/
+**.mp3
+build/
+**.egg-info/
+dist/
+cookies.txt
+.git
+logs/
+**.md
+LICENSE
