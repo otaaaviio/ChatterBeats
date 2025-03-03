@@ -9,5 +9,3 @@ services:
     command: ["python", "./src/main.py"]
     volumes:
       - .:/app
-    ports:
-      - "8000:8000"
